@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 dotenv.config()
 import authRoute from "./routes/authRoutes.js"
 import userRoute from "./routes/userRoute.js"
+import postRoute from "./routes/postRoutes.js"
 const PORT= process.env.PORT || 4000
 
 const app = express()
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use("/auth", authRoute)
 app.use("/user", userRoute)
+app.use("/post", postRoute)
 
 app.listen(PORT, () =>{
     console.log(`Server Started At ${PORT}`)
