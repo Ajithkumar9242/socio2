@@ -47,6 +47,9 @@
     background: transparent;
     border: 2px solid var(--orange);
 }
+.button:disabled{
+    pointer-events: none;
+}
 
 ::-webkit-scrollbar {
     display: none;
