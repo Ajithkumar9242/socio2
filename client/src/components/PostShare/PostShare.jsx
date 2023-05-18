@@ -31,10 +31,7 @@ const PostShare = () => {
     }
   };
 
-const resetShare = () => {
-    setImage(null);
-    desc.current.value = "";
-  };
+
 
 const handleSubmit = (e) =>{
   e.preventDefault()
@@ -62,6 +59,10 @@ const handleSubmit = (e) =>{
   resetShare()
 }
 
+const resetShare = () => {
+    setImage(null);
+    desc.current.value = "";
+  };
   return (
     <div className="PostShare">
       <img src={ProfileImage} alt="" />
