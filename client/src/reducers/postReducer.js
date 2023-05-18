@@ -1,6 +1,6 @@
-const postReducer = ({
-    state = { posts: null, loading: false, error: false, uploading: false}, action
-}) =>{
+const postReducer = (
+    state = { posts: [], loading: false, error: false, uploading: false}, action
+) =>{
     switch (action.type) {
         case "UPLOAD_START":
             return { ...state, uploading: true, error:false}

@@ -12,10 +12,12 @@ import { AiOutlineVideoCameraAdd } from 'react-icons/ai';
 import { BiCurrentLocation } from 'react-icons/bi';
 import { AiFillSchedule } from 'react-icons/ai';
 import { RxCross2 } from 'react-icons/rx';
-import { uploadImage } from "../../api/UploadRequest";
+// import { uploadImage } from "../../api/UploadRequest";
+import { uploadImage, uploadPost } from "../../actions/uploadAction";
 
 
 const PostShare = () => {
+  const loading = useSelector((state) => state.postReducer.uploading);
   const [image, setImage] = useState(null);
   const imageRef = useRef();
   const dispatch = useDispatch();
@@ -28,6 +30,12 @@ const PostShare = () => {
       setImage(img);
     }
   };
+
+const resetShare = () => {
+    setImage(null);
+    desc.current.value = "";
+  };
+
 const handleSubmit = (e) =>{
   e.preventDefault()
 
@@ -51,6 +59,7 @@ const handleSubmit = (e) =>{
   }
 
   dispatch(uploadPost(newPost))
+  resetShare()
 }
 
   return (
@@ -79,8 +88,9 @@ const handleSubmit = (e) =>{
           </div>
           <button className="button ps-button"
           onClick={handleSubmit}
+          disabled={loading}
           >
-            Share
+            {loading ? "uploading" : "Share"}
             </button>
           <div style={{ display: "none" }}>
             <input

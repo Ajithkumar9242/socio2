@@ -118,11 +118,15 @@ export const getTimelinePost = async (req , res) =>{
                 }
             }
         ])
-        res.status(200).json(currentUserPost.concat(...followingPosts[0].followingPosts)).sort(( a, b) =>{
-            return b.createdAt - a.createdAt
+  
+    res.status(200).json(
+      currentUserPosts
+        .concat(...followingPosts[0].followingPosts)
+        .sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt);
         })
-
-    } catch (error) {
-        console.log(error)
-    }
-}
+    );
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

@@ -14,6 +14,11 @@ const PORT= process.env.PORT || 4000
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
+
+
+app.use(express.static('public')); 
+app.use('/images', express.static('images'));
+// app.use("/images", express.static("images"))
 // app.use(bodyParser.urlencoded())
 
 mongoose.connect(process.env.MONGO_URI)
