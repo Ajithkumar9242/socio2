@@ -8,13 +8,16 @@ import { AiFillSetting } from 'react-icons/ai';
 
 import TrendCard from "../TrendCard/TrendCard";
 import ShareModal from "../ShareModal/ShareModal";
+import { Link } from "react-router-dom";
 
 const RightSide = () => {
   const [modalOpened, setModalOpened] = useState(false);
   return (
     <div className="RightSide">
       <div className="navIcons">
-        <img src={Home} alt="" />
+        <Link to={"/home"}>
+        <img src={Home} alt="" style={{cursor : "pointer"}}/>
+        </Link>
         <AiFillSetting />
         <img src={Noti} alt="" />
         <img src={Comment} alt="" />

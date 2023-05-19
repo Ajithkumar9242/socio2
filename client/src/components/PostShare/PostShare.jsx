@@ -65,7 +65,8 @@ const resetShare = () => {
   };
   return (
     <div className="PostShare">
-      <img src={ProfileImage} alt="" />
+      <img src={user.profilePicture ? import.meta.env.VITE_SOME_VALUE + user.profilePicture : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} alt="" />
+
       <div>
         <input type="text" placeholder="What's happening" ref={desc} required/>
         <div className="postOptions">
