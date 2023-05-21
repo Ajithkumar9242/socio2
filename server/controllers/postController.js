@@ -67,29 +67,22 @@ export const deletePost = async (req , res) =>{
     }
 }
 
-export const likePost = async (req , res) =>{
-    const id = req.params.id
-    const { userId } = req.body
-
-    try {
-        const post = await PostModel.findById(id)
-        if(!post.likes.includes(userId)){
-            await post.updateOne({
-                $push: { likes: userId }
-            })
-            res.status(200).json("liked")
-        }else{
-            await post.updateOne({
-                $pull: { likes: userId }
-            })
-            res.status(200).json("Disliked")
-        }
-    
+export const likePost = async (req, res) => {
+  const id = req.params.id;
+  const { userId } = req.body;
+  try {
+    const post = await PostModel.findById(id);
+    if (post.likes.includes(userId)) {
+      await post.updateOne({ $pull: { likes: userId } });
+      res.status(200).json("Post disliked");
+    } else {
+      await post.updateOne({ $push: { likes: userId } });
+      res.status(200).json("Post liked");
     }
-     catch (error) {
-        console.log(error)
-    }
-}
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 //timeline post
 export const getTimelinePost = async (req, res) => {

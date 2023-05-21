@@ -15,9 +15,9 @@ const Post = ({ data }) => {
 
   
   const handleLike = () => {
-    likePost(data._id, user._id);
     setLiked((prev) => !prev);
-    liked? setLikes((prev)=>prev-1): setLikes((prev)=>prev+1)
+    likePost(data._id, user._id);
+    liked ? setLikes((prev) => prev-1) : setLikes((prev) => prev+1)
   };
   return (
     <div className="Post">
