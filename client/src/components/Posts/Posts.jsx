@@ -2,23 +2,20 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch} from "react-redux"
 import './Posts.css'
 import Post from '../Post/Post'
-import { getTimelinePost } from '../../actions/postAction'
+import { getTimelinePost   } from '../../actions/postAction'
+import { useParams } from 'react-router-dom'
 
 
 const Posts = () => {
-
-// const params = useParams()
+  const params = useParams()
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authReducer.authData);
   let { posts, loading } = useSelector((state) => state.postReducer);
-
-
-
   useEffect(() => {
     dispatch(getTimelinePost(user._id));
   }, []);
   if(!posts) return 'No Posts';
-  // if(params.id) posts = posts.filter((post)=> post.userId===params.id)
+  if(params.id) posts = posts.filter((post)=> post.userId===params.id)
   return (
     <div className="Posts">
       {loading
@@ -28,6 +25,6 @@ const Posts = () => {
           })}
     </div>
   );
-}
+};
 
 export default Posts

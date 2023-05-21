@@ -8,44 +8,46 @@ import { useSelector } from 'react-redux'
 import { likePost } from '../../api/PostREquest'
 
 
-const Post = ({data}) => {
-
-  const { user } = useSelector((state) => state.authReducer.authData)
-
-  const [liked, setLiked] = useState(data.likes.includes(user._id))
+const Post = ({ data }) => {
+  const { user } = useSelector((state) => state.authReducer.authData);
+  const [liked, setLiked] = useState(data.likes.includes(user._id));
   const [likes, setLikes] = useState(data.likes.length)
 
-  const handleClick = () =>{
-    setLiked((prev) => !prev)
-    likePost(data._id, user._id)
-    liked ? setLikes((prev) => prev - 1) : setLikes((prev) => prev + 1)
-  }
-
+  
+  const handleLike = () => {
+    likePost(data._id, user._id);
+    setLiked((prev) => !prev);
+    liked? setLikes((prev)=>prev-1): setLikes((prev)=>prev+1)
+  };
   return (
     <div className="Post">
-        <img
+      <img
          src={data.image ? import.meta.env.VITE_SOME_VALUE + data.image : ""}
         alt=""
       />
 
+      <div className="postReact">
+        <img
+          src={liked ? Heart : NotLike}
+          alt=""
+          style={{ cursor: "pointer" }}
+          onClick={handleLike}
+        />
+        <img src={Comment} alt="" />
+        <img src={Share} alt="" />
+      </div>
 
-        <div className="postReact">
-            <img src={liked? Heart : NotLike} alt="" style={{cursor: 'pointer'}}
-            onClick={handleClick}
-            />
-            <img src={Comment} alt="" />
-            <img src={Share} alt="" />
-        </div>
-
-
-        <span style={{color: "var(--gray)", fontSize: '12px'}}>{likes} likes</span>
-
-        <div className="detail">
-            <span><b>{data.name}</b></span>
-            <span> {data.desc}</span>
-        </div>
+      <span style={{ color: "var(--gray)", fontSize: "12px" }}>
+        {likes} likes
+      </span>
+      <div className="detail">
+        <span>
+          <b>{data.name} </b>
+        </span>
+        <span>{data.desc}</span>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Post

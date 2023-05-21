@@ -1,5 +1,6 @@
 import UserModel from "../models/userModel.js";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export const getUser = async (req , res) =>{
     const id = req.params.id
@@ -21,32 +22,39 @@ export const getUser = async (req , res) =>{
 
 //update
 
-export const updateUser = async (req , res) =>{
-    const id = req.params.id
-    const { currentUserId, currentuserAdminStatus, password } = req.body
-
-    if (id === currentUserId || currentuserAdminStatus) {
-        try {
-
-
-            if( password ){
-               const salt = await bcrypt.genSalt(10)
-               req.body.password = await bcrypt.hash(password, salt)
-            }
-            else{
-                res.status(500).json("not authenticated")
-            }
-            const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true})
-            res.status(200).json(user)
-            
-        } catch (error) {
-            console.log(error)
-        }
-    } else {
-        
+export const updateUser = async (req, res) => {
+  const id = req.params.id;
+  // console.log("Data Received", req.body)
+  const { _id, currentUserAdmin, password } = req.body;
+  
+  if (id === _id) {
+    try {
+      // if we also have to update password then password will be bcrypted again
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(password, salt);
+      }
+      // have to change this
+      const user = await UserModel.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+      const token = jwt.sign(
+        { username: user.username, id: user._id },
+        process.env.JWT_SEC,
+        { expiresIn: "3h" }
+      );
+      console.log({user, token})
+      res.status(200).json({user, token});
+    } catch (error) {
+      console.log("Error ", error)
+      res.status(500).json(error);
     }
-
-}
+  } else {
+    res
+      .status(403)
+      .json("Access Denied! You can update only your own Account.");
+  }
+};
 
 //delete
 
@@ -74,17 +82,17 @@ export const deleteUser = async (req , res) =>{
 //follow
 export const followUser = async (req , res) =>{
     const id = req.params.id
-    const { currentUserId } = req.body
-    if (currentUserId === id) {
+    const { _id } = req.body
+    if (_id === id) {
        res.status(403).json("Forbidden")
     }else{
         try {
             const followUser = await UserModel.findById(id)
-            const followingUser = await UserModel.findById(currentUserId)
+            const followingUser = await UserModel.findById(_id)
 
-            if (!followUser.followers.includes(currentUserId)) {
+            if (!followUser.followers.includes(_id)) {
                 await followUser.updateOne({
-                    $push: { followers: currentUserId}
+                    $push: { followers: _id}
                 })
 
                 await followingUser.updateOne({
@@ -105,17 +113,17 @@ export const followUser = async (req , res) =>{
 //unfollow
 export const unFollowUser = async (req , res) =>{
     const id = req.params.id
-    const { currentUserId } = req.body
-    if (currentUserId === id) {
+    const { _id } = req.body
+    if (_id === id) {
        res.status(403).json("Forbidden")
     }else{
-        try {
+    try {
             const followUser = await UserModel.findById(id)
-            const followingUser = await UserModel.findById(currentUserId)
+            const followingUser = await UserModel.findById(_id)
 
-            if (followUser.followers.includes(currentUserId)) {
+            if (followUser.followers.includes(_id)) {
                 await followUser.updateOne({
-                    $pull: { followers: currentUserId}
+                    $pull: { followers: _id}
                 })
 
                 await followingUser.updateOne({
@@ -131,3 +139,18 @@ export const unFollowUser = async (req , res) =>{
         }
     }
 }
+
+
+export const getAllUsers = async (req, res) => {
+
+  try {
+    let users = await UserModel.find();
+    users = users.map((user)=>{
+      const {password, ...otherDetails} = user._doc
+      return otherDetails
+    })
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

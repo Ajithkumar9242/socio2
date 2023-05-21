@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./InfoCard.css";
 // import { UilPen } from "@iconscout/react-unicons";
 import { BsPenFill } from 'react-icons/bs';
-  
+import * as UserApi from "../../api/UserRequest"
 
 import ProfileModal from "../ProfileModal.jsx/ProfileModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { logOut } from "../../actions/AuthAction";
 
 const InfoCard = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const InfoCard = () => {
 
 
   const handleLogOut = ()=> {
-    dispatch(logout())
+    dispatch(logOut())
   }
 
 
@@ -41,8 +42,9 @@ const InfoCard = () => {
       <div className="infoHead">
         <h4>Profile Info</h4>
         {user._id === profileUserId ? (
-          <div>
-            <UilPen
+          <d  iv>
+            <BsPenFill
+            style={{ cursor: "pointer"}}
               width="2rem"
               height="1.2rem"
               onClick={() => setModalOpened(true)}
@@ -52,7 +54,7 @@ const InfoCard = () => {
               setModalOpened={setModalOpened}
               data = {user}
             />
-          </div>
+          </d>
         ) : (
           ""
         )}
