@@ -5,6 +5,9 @@ import Home from "./pages/home/Home"
 import Auth from "./pages/Auth/Auth";
 import Profile from "./pages/Profile/Profile";
 import { useSelector } from "react-redux";
+import Signup from "./pages/Auth/SignUp";
+import SignUp from "./pages/Auth/SignUp";
+import Login from "./pages/Auth/Auth";
 
 const App = () => {
 const user = useSelector((state) => state.authReducer.authData);
@@ -17,19 +20,30 @@ const user = useSelector((state) => state.authReducer.authData);
       <Routes>
         <Route
           path="/"
-          element={user ? <Navigate to="home" /> : <Navigate to="auth" />}
+          element={user ? <Navigate to="home" /> : <SignUp />}
         />
         <Route
           path="/home"
-          element={user ? <Home /> : <Navigate to="../auth" />}
+          element={user ? <Home /> :  <SignUp />}
         />
-        <Route
+        {/* <Route
           path="/auth"
-          element={user ? <Navigate to="../home" /> : <Auth />}
+          element={user ? <Navigate to="../home" /> :  <SignUp />}
+        /> */}
+
+
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="../home" /> :  <SignUp />}
+        />
+
+          <Route
+          path="/login"
+          element={ <Login />}
         />
         <Route
           path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="../auth" />}
+          element={user ? <Profile /> :  <SignUp />}
         />
         <Route
           path="*"

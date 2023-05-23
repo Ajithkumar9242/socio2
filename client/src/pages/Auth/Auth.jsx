@@ -1,166 +1,140 @@
-import React, { useState } from "react";
-import "./Auth.css";
-import Logo from "../../img/logo.png";
-// import { logIn, signUp } from "../../actions/AuthActions.js";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { login, signUp } from "../../actions/AuthAction";
 
-const Auth = () => {
-  const initialState = {
-    firstname: "",
-    lastname: "",
-    username: "",
-    password: "",
-    confirmpass: "",
-  };
-  const loading = useSelector((state) => state.authReducer.loading);
-  // const navigate = useNavigate();
+
+import { React , useState } from 'react'
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Link,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { useToast } from '@chakra-ui/react'
+import { login } from '../../actions/AuthAction';
+import { useDispatch } from 'react-redux';
+
+
+const Login = () => {
+    
+  const toast = useToast()
   const dispatch = useDispatch();
-  const [isSignUp, setIsSignUp] = useState(false);
 
-  const [data, setData] = useState(initialState);
 
-  const [confirmPass, setConfirmPass] = useState(true);
+  const [loading, setLoading] = useState()
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
+    const navigateTo = useNavigate()
 
-  // const dispatch = useDispatch()
 
-  // Reset Form
-  const resetForm = () => {
-    setData(initialState);
-    setConfirmPass(confirmPass);
-  };
+const submitHandler = async () =>{
+  setLoading(true)
+  if(!username || !password) {
+    toast({
+        title: "Please Fill all the Feilds",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false)
+      return
+  }
 
-  // handle Change in input
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  try {
+ 
+    const data  = {
+          username, password
+        }
+        toast({
+        title: "Login Successfully",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      dispatch(login(data));
 
-  // Form Submission
-  const handleSubmit = (e) => {
-    setConfirmPass(true);
-    e.preventDefault();
-    if (isSignUp) {
-      data.password === data.confirmpass
-        ? dispatch(signUp(data))
-        : setConfirmPass(false);
-    } else {
-      dispatch(login  (data));
-    }
-  };
+      localStorage.setItem("userInfo" , JSON.stringify(data))
+        setLoading(false)
+        navigateTo("/")
 
+
+  } catch (error) {
+    toast({
+        title: "Please Fill all the Feilds",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+
+      setLoading(false)
+        console.log(error);
+  }
+}
   return (
-    <div className="Auth">
-      {/* left side */}
-
-      <div className="a-left">
-        <img src={Logo} alt="" />
-
-        <div className="Webname">
-          <h1>KT Media</h1>
-        </div>
-      </div>
-
-      {/* right form side */}
-
-      <div className="a-right">
-        <form className="infoForm authForm" onSubmit={handleSubmit}>
-          <h3>{isSignUp ? "Register" : "Login"}</h3>
-          {isSignUp && (
-            <div>
-              <input
-                required
-                type="text"
-                placeholder="First Name"
-                className="infoInput"
-                name="firstname"
-                value={data.firstname}
-                onChange={handleChange}
-              />
-              <input
-                required
-                type="text"
-                placeholder="Last Name"
-                className="infoInput"
-                name="lastname"
-                value={data.lastname}
-                onChange={handleChange}
-              />
-            </div>
-          )}
-
-          <div>
-            <input
-              required
-              type="text"
-              placeholder="Username"
-              className="infoInput"
-              name="username"
-              value={data.username}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input
-              required
-              type="password"
-              className="infoInput"
-              placeholder="Password"
-              name="password"
-              value={data.password}
-              onChange={handleChange}
-            />
-            {isSignUp && (
-              <input
-                required
-                type="password"
-                className="infoInput"
-                name="confirmpass"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-              />
-            )}
-          </div>
-
-          <span
-            style={{
-              color: "red",
-              fontSize: "12px",
-              alignSelf: "flex-end",
-              marginRight: "5px",
-              display: confirmPass ? "none" : "block",
-            }}
-          >
-            *Confirm password is not same
-          </span>
-          <div>
-            <span
-              style={{
-                fontSize: "12px",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                resetForm();
-                setIsSignUp((prev) => !prev);
-              }}
-            >
-              {isSignUp
-                ? "Already have an account Login"
-                : "Don't have an account Sign up"}
-            </span>
-            <button
-              className="button infoButton"
-              type="Submit"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : isSignUp ? "SignUp" : "Login"}
-            </button>
-          </div>
-        </form>
-      </div>
+    <div>
+        <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}
+      bg={useColorModeValue('gray.50', 'gray.800')}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>User Name</FormLabel>
+              <Input type="text" onChange={(e) => setUsername(e.target.value)}/>
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
+            </FormControl>
+            <Stack spacing={10}>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Remember me</Checkbox>
+                <Link color={'blue.400'}>Forgot password?</Link>
+              </Stack>
+              <Button
+                bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'blue.500',
+                  
+                }}
+                onClick = { submitHandler }
+                isLoading = { loading }
+                >
+                Sign in
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
     </div>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Login
