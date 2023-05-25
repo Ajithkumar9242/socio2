@@ -7,16 +7,20 @@ import "./PostShare.css";
 // import { UilLocationPoint } from "@iconscout/react-unicons";
 // import { UilSchedule } from "@iconscout/react-unicons";
 // import { UilTimes } from "@iconscout/react-unicons";
-import { BiPhotoAlbum } from 'react-icons/bi';
-import { AiOutlineVideoCameraAdd } from 'react-icons/ai';
+import { BiPhotoAlbum, BiVideo } from 'react-icons/bi';
+import { AiOutlineHome, AiOutlineVideoCameraAdd } from 'react-icons/ai';
 import { BiCurrentLocation } from 'react-icons/bi';
 import { AiFillSchedule } from 'react-icons/ai';
 import { RxCross2 } from 'react-icons/rx';
+import { IoIosShare } from 'react-icons/io';
+
 // import { uploadImage } from "../../api/UploadRequest";
 import { uploadImage, uploadPost } from "../../actions/uploadAction";
+import { Avatar, Button, Input, Spinner, Stack } from "@chakra-ui/react";
 
 
 const PostShare = () => {
+  
   const loading = useSelector((state) => state.postReducer.uploading);
   const [image, setImage] = useState(null);
   const imageRef = useRef();
@@ -49,13 +53,15 @@ const handleSubmit = (e) =>{
 
     try {
       dispatch(uploadImage(data))
+
+
     } catch (error) {
       console.log(error)
     }
 
+    dispatch(uploadPost(newPost))
   }
 
-  dispatch(uploadPost(newPost))
   resetShare()
 }
 
@@ -65,35 +71,47 @@ const resetShare = () => {
   };
   return (
     <div className="PostShare">
-      <img src={user.profilePicture ? import.meta.env.VITE_SOME_VALUE + user.profilePicture : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} alt="" />
+      <Avatar name={user.name}  src={user.profilePicture ? import.meta.env.VITE_SOME_VALUE + user.profilePicture : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} alt="" />
 
       <div>
-        <input type="text" placeholder="What's happening" ref={desc} required/>
-        <div className="postOptions">
-          <div className="option" style={{ color: "var(--photo)" }}
-          onClick={()=>imageRef.current.click()}
-          >
-            <BiPhotoAlbum />
+
+        <Input placeholder="What's Happening?" size='md' ref={desc} required={true} />
+        <>
+          <Stack direction='row' spacing={4} align='center' onClick={()=>imageRef.current.click()}>
+<Button colorScheme='green' leftIcon={<BiPhotoAlbum />} >
             Photo
-          </div>
-          <div className="option" style={{ color: "var(--video)" }}>
-            <AiOutlineVideoCameraAdd />
-            Video
-          </div>{" "}
-          <div className="option" style={{ color: "var(--location)" }}>
-            <BiCurrentLocation />
+
+  </Button>
+
+  <Button colorScheme='teal' leftIcon={<AiOutlineVideoCameraAdd />} >
+  Video
+
+
+  </Button>
+
+  <Button colorScheme='cyan' leftIcon={<BiCurrentLocation />} >
             Location
-          </div>{" "}
-          <div className="option" style={{ color: "var(--shedule)" }}>
-            <AiFillSchedule />
-            Shedule
-          </div>
-          <button className="button ps-button"
-          onClick={handleSubmit}
+
+  </Button>
+
+  <Button colorScheme='purple' leftIcon={<AiFillSchedule />} >
+            Schedule
+
+  </Button>
+
+          </Stack>
+             <Button colorScheme='purple' leftIcon={<IoIosShare />}
+     onClick={handleSubmit}
           disabled={loading}
+
           >
-            {loading ? "uploading" : "Share"}
-            </button>
+            {loading ? <Spinner color='green.500' /> : "Share"}
+
+  </Button>
+
+
+          
+
           <div style={{ display: "none" }}>
             <input
               type="file"
@@ -102,7 +120,7 @@ const resetShare = () => {
               onChange={onImageChange}
             />
           </div>
-        </div>
+        </>
       {image && (
 
         <div className="previewImage">

@@ -3,4 +3,5 @@
     display: grid;
     grid-template-columns: 18rem auto 20rem;
     gap: 1rem;
+    background-image: url("https: //cdn.pixabay.com/photo/2021/09/16/08/56/leaves-6629581_1280.png");
 }
