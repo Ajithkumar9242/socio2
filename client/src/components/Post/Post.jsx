@@ -50,17 +50,17 @@ const Post = ({ data }) => {
     //     <span>{data.desc}</span>
     //   </div>
     // </div>
-    <Card maxW='md'>
+    <Card maxW='md' boxShadow='xl' mb={"8px"} rounded='md' bg='white'>
   <CardHeader>
     <Flex spacing='4'>
       <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
         {/* here also */}
-        <Avatar name={data.name} src={data.profilePicture ? import.meta.env.VITE_SOME_VALUE + data.profilePicture  : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} />
+        <Avatar name={user.name} src={user.profilePicture ? import.meta.env.VITE_SOME_VALUE + user.profilePicture  : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} />
 
-        <Box>
+        <Box >
           {/* //here change the profile pic */}
           {/* //here change the profile pic */}
-          <Heading size='sm'>{data.name}</Heading>
+          <Heading size='sm'>{user.username}</Heading>
           {/* <Text>Creator, Chakra UI</Text> */}
         </Box>
       </Flex>
@@ -72,7 +72,7 @@ const Post = ({ data }) => {
       />
     </Flex>
   </CardHeader>
-  <CardBody>
+  <CardBody> 
     <Text>
      {data.desc}
     </Text>

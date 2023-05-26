@@ -100,22 +100,16 @@ const submitHandler = async () =>{
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="email" isRequired>
               <FormLabel>User Name</FormLabel>
               <Input type="text" onChange={(e) => setUsername(e.target.value)}/>
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
             </FormControl>
             <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}>
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack>
+     
               <Button
                 bg={'blue.400'}
                 color={'white'}
@@ -128,6 +122,11 @@ const submitHandler = async () =>{
                 >
                 Sign in
               </Button>
+            </Stack>
+            <Stack spacing={10}>
+              <Text align={'center'}>
+                Dont have an account? <Link color={'blue.400'} href='/signup'> Sign Up</Link>
+              </Text>
             </Stack>
           </Stack>
         </Box>

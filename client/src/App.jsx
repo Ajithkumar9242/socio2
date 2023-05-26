@@ -20,11 +20,11 @@ const user = useSelector((state) => state.authReducer.authData);
       <Routes>
         <Route
           path="/"
-          element={user ? <Navigate to="home" /> : <SignUp />}
+          element={user ? <Navigate to="home" /> : <Login />}
         />
         <Route
           path="/home"
-          element={user ? <Home /> :  <SignUp />}
+          element={user ? <Home /> :  <Login />}
         />
         {/* <Route
           path="/auth"
@@ -43,7 +43,7 @@ const user = useSelector((state) => state.authReducer.authData);
         />
         <Route
           path="/profile/:id"
-          element={user ? <Profile /> :  <SignUp />}
+          element={user ? <Profile /> :  <Login />}
         />
         <Route
           path="*"

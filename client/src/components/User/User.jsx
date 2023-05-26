@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { followUser, unFollowUser } from '../../actions/userAction'
+import { Avatar, Button, Heading } from '@chakra-ui/react'
+import {  SlUserFollowing, SlUserUnfollow } from 'react-icons/sl';
 
 const User = ({person}) => {
 
@@ -25,16 +27,22 @@ const User = ({person}) => {
         <div className="follower">
                     <div>
                         {/* <img src={person.img} alt="" className='followerImage' /> */}
-                      <img src={person.profilePicture ? import.meta.env.VITE_SOME_VALUE + person.profilePicture : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} alt="" className='followerImage'/>
+                        {/* < name='Dan Abrahmov' src='https://bit.ly/dan-abramov' /> */}
+                      <Avatar name={person.firstname} src={person.profilePicture ? import.meta.env.VITE_SOME_VALUE + person.profilePicture : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} alt="" className='followerImage'/>
 
                         <div className="name">
-                            <span>{person.firstname}</span>
-                            <span>{person.username}</span>
+                          <Heading size='sm'>{person.firstname}</Heading>
+                          <Heading size='sm'>{person.username}</Heading>
+
+                            {/* <span>{person.firstname}</span> */}
+                            {/* <span>{person.username}</span> */}
                         </div>
                     </div>
-                    <button className='button fc-button' onClick={handleFollow}>
-                        { following ? "Unfollow" : "Follow"}
-                    </button>
+                    <Button colorScheme='facebook'  onClick={handleFollow}>
+                        { following ? <SlUserFollowing /> : <SlUserUnfollow />  }
+                      
+                    </Button>
+        
                 </div>
     </>
   )

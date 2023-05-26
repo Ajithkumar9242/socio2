@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --yellow: #f5c32c;
     --orange: #fca61f;
     --black: #242d49;
@@ -12,7 +12,7 @@
     --video: #4A4EB7;
     --location: #EF5757;
     --shedule: #E1AE4A;
-} */
+}
 
 .App {
     overflow: hidden;
@@ -20,6 +20,14 @@
     padding: 1rem 1rem;
 }
 
+.blur {
+    position: absolute;
+    width: 22rem;
+    height: 14rem;
+    border-radius: 50%;
+    background: #a6ddf0;
+    filter: blur(32px)
+}
 
 .button {
     display: flex;
@@ -34,11 +42,9 @@
 
 .button:hover {
     cursor: pointer;
-    color: var(--orange);
-    background: transparent;
-    border: 2px solid var(--orange);
 }
-.button:disabled{
+
+.button:disabled {
     pointer-events: none;
 }
 
@@ -47,8 +53,7 @@
 }
 
 
-.app{
+.app {
     overflow: hidden;
     padding: 1rem;
 }
-
