@@ -4,6 +4,7 @@ import './FollowersCard.css'
 import User from '../User/User'
 import { useSelector } from 'react-redux'
 import { getAllUser } from '../../api/UserRequest'
+import { Text } from '@chakra-ui/react'
 
 
 const FollowersCard = () => {
@@ -25,7 +26,8 @@ const FollowersCard = () => {
 
   return (
     <div className="FollowersCard">
-        <h3>Who is following you</h3>
+      <Text fontSize='xl'>Who is following you</Text>
+
 
         {persons. map((person, id)=>{
             if(person._id !== user._id){

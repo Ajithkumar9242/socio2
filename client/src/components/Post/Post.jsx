@@ -55,7 +55,7 @@ const Post = ({ data }) => {
     <Flex spacing='4'>
       <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
         {/* here also */}
-        <Avatar name={user.name} src={user.profilePicture ? import.meta.env.VITE_SOME_VALUE + user.profilePicture  : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} />
+        <Avatar name={data.name} src={data.profilePicture ? import.meta.env.VITE_SOME_VALUE + data.profilePicture  : "https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-600w-1359971813.jpg"} />
 
         <Box >
           {/* //here change the profile pic */}
