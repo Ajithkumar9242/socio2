@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { followUser, unFollowUser } from '../../actions/userAction'
 import { Avatar, Button, Heading } from '@chakra-ui/react'
-import {  SlUserFollowing, SlUserUnfollow } from 'react-icons/sl';
+import {  SlUserFollow, SlUserFollowing } from 'react-icons/sl';
 
 const User = ({person}) => {
 
@@ -39,7 +39,7 @@ const User = ({person}) => {
                         </div>
                     </div>
                     <Button colorScheme='facebook'  onClick={handleFollow}>
-                        { following ? <SlUserFollowing /> : <SlUserUnfollow />  }
+                        { following ? <SlUserFollowing /> : <SlUserFollow />  }
                       
                     </Button>
         

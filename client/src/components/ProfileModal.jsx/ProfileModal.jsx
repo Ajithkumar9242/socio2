@@ -1,12 +1,32 @@
-import { Modal, useMantineTheme } from "@mantine/core";
-import { useState } from "react";
+
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../actions/uploadAction";
 import { updateUser } from "../../actions/userAction";
 
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input
+} from '@chakra-ui/react'
+import { FaUserEdit } from "react-icons/fa";
+
 const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
   const { password, ...other } = data;
   const [formData, setFormData] = useState(other);
   const [profileImage, setProfileImage] = useState(null);
@@ -61,92 +81,115 @@ const ProfileModal = ({ modalOpened, setModalOpened, data }) => {
   };
 
   return (
-    <Modal
-      overlayColor={
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[9]
-          : theme.colors.gray[2]
-      }
-      overlayOpacity={0.55}
-      overlayBlur={3}
-      size="55%"
-      opened={modalOpened}
-      onClose={() => setModalOpened(false)}
-    >
-      <form className="infoForm" onSubmit={handleSubmit}>
-        <h3>Your Info</h3>
-        <div>
-          <input
-            value={formData.firstname}
-            onChange={handleChange}
-            type="text"
-            placeholder="First Name"
-            name="firstname"
-            className="infoInput"
-          />
-          <input
-            value={formData.lastname}
-            onChange={handleChange}
-            type="text"
-            placeholder="Last Name"
-            name="lastname"
-            className="infoInput"
-          />
-        </div>
+   
+    <>
+      <Button onClick={onOpen}>
+        <FaUserEdit />
+      </Button>
 
-        <div>
-          <input
-            value={formData.worksAt}
-            onChange={handleChange}
-            type="text"
-            placeholder="Works at"
-            name="worksAt"
-            className="infoInput"
-          />
-        </div>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create your account</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>First name</FormLabel>
+              <Input
+               value={formData.firstname}
+             onChange={handleChange}
+             name="firstname"
+             placeholder='First name' />
+            </FormControl>
 
-        <div>
-          <input
-            value={formData.livesIn}
-            onChange={handleChange}
-            type="text"
-            placeholder="Lives in"
-            name="livesIn"
-            className="infoInput"
-          />
-          <input
-            value={formData.country}
-            onChange={handleChange}
-            type="text"
-            placeholder="Country"
-            name="country"
-            className="infoInput"
-          />
-        </div>
+            <FormControl mt={4}>
+              <FormLabel>Last name</FormLabel>
+              <Input
+                   value={formData.lastname}
+             onChange={handleChange}
+             name="lastname"
+              placeholder='Last name' />
+            </FormControl>
 
-        <div>
-          <input
-            value={formData.relationship}
-            onChange={handleChange}
-            type="text"
-            className="infoInput"
-            placeholder="Relationship status"
-            name="relationship"
-          />
-        </div>
 
-        <div>
-          Profile image
-          <input type="file" name="profileImage"  onChange={onImageChange} />
-          Cover image
-          <input type="file" name="coverImage" onChange={onImageChange} />
-        </div>
+ <FormControl mt={4}>
+              <FormLabel>Works At</FormLabel>
+              <Input
+                   value={formData.worksAt}
+             onChange={handleChange}
+             name="worksAt"
+              placeholder='Works At' />
+            </FormControl>
 
-        <button className="button infoButton" type="submit">
-          Update
-        </button>
-      </form>
-    </Modal>
+
+            
+            
+ <FormControl mt={4}>
+              <FormLabel>Lives At</FormLabel>
+              <Input
+                   value={formData.livesIn}
+             onChange={handleChange}
+             name="livesIn"
+              placeholder='Lives In' />
+            </FormControl>
+
+             <FormControl mt={4}>
+              <FormLabel>Country</FormLabel>
+              <Input
+                   value={formData.country}
+             onChange={handleChange}
+             name="country"
+              placeholder='Country' />
+            </FormControl>
+
+ <FormControl mt={4}>
+              <FormLabel>Relationship status</FormLabel>
+              <Input
+                   value={formData.relationship}
+             onChange={handleChange}
+             name="relationship"
+              placeholder='Relationship status' />
+            </FormControl>
+
+
+
+
+
+ <FormControl mt={4}>
+              <FormLabel>Profile image</FormLabel>
+              <Input
+              type="file"
+              name="profileImage"
+        onChange={onImageChange} />
+            </FormControl>
+
+
+ <FormControl mt={4}>
+              <FormLabel>Cover image</FormLabel>
+              <Input
+              type="file"
+              name="coverImage"
+        onChange={onImageChange} />
+            </FormControl>
+
+
+
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

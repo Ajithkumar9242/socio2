@@ -84,7 +84,10 @@ export default function ProfileCard({location}) {
   const { user } = useSelector((state) => state.authReducer.authData)
   const posts = useSelector((state) => state.postReducer.posts)
   return (
+    <>
+    
     <Center py={6}>
+
       <Box
         minW={'20em'}
         w={'full'}
@@ -153,5 +156,7 @@ export default function ProfileCard({location}) {
         </Box>
       </Box>
     </Center>
+    </>
+
   );
 }

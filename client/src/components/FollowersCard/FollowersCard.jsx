@@ -26,12 +26,13 @@ const FollowersCard = () => {
 
   return (
     <div className="FollowersCard">
-      <Text fontSize='xl'>Who is following you</Text>
+      <Text fontSize='xl'>People around you</Text>
 
 
         {persons. map((person, id)=>{
             if(person._id !== user._id){
             return(
+              
                 <User person = {person} key={id}/>
             )
             }

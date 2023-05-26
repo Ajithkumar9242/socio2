@@ -45,19 +45,19 @@ const InfoCard = () => {
       <div className="infoHead">
         <h4>Profile Info</h4>
         {user._id === profileUserId ? (
-          <d  iv>
-            <FaUserEdit
+          <div>
+            {/* <FaUserEdit
             style={{ cursor: "pointer"}}
               width="2rem"
               height="1.2rem"
               onClick={() => setModalOpened(true)}
-            />
+            /> */}
             <ProfileModal
               modalOpened={modalOpened}
               setModalOpened={setModalOpened}
               data = {user}
             />
-          </d>
+          </div>
         ) : (
           ""
         )}
@@ -66,25 +66,25 @@ const InfoCard = () => {
       <div className="info">
         {/* */}
         <span>
-          <b>Status </b>
+          <b>Status: </b>
         </span>
         <span>{profileUser.relationship}</span>
       </div>
       <div className="info">
         <span>
-          <b>Lives in </b>
+          <b>Lives in : </b>
         </span>
         <span>{profileUser.livesIn}</span>
       </div>
       <div className="info">
         <span>
-          <b>Works at </b>
+          <b>Works at: </b>
         </span>
         <span>{profileUser.worksAt}</span>
       </div>
       <div className="info">
         <span>
-          <b>Posts </b>
+          <b>Posts: </b>
         </span>
         <span>{posts.filter((post) => post.userId === user._id).length}</span>
       </div>

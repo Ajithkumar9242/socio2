@@ -94,7 +94,8 @@ const Post = ({ data }) => {
   >
 
     <Button flex='1' variant='ghost' leftIcon={liked? <AiFillLike /> :<BiLike />} onClick={handleLike}>
-      Like
+          {likes} likes
+
     </Button>
     <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
       Comment
@@ -102,7 +103,6 @@ const Post = ({ data }) => {
     <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
       Share
     </Button>
-    {likes} likes
 
   </CardFooter>
 </Card>

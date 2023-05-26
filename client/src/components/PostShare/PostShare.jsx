@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import {useSelector,  useDispatch } from "react-redux"
-import ProfileImage from "../../img/profileImg.jpg";
+
 import "./PostShare.css";
 // import { GiAscendingBlock } from "@iconscout/react-unicons";
 // import { UilPlayCircle } from "@iconscout/react-unicons";
@@ -54,11 +54,10 @@ const handleSubmit = (e) =>{
     try {
       dispatch(uploadImage(data))
 
-
     } catch (error) {
       console.log(error)
     }
-
+    
     dispatch(uploadPost(newPost))
   }
 
